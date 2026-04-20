@@ -15,20 +15,23 @@ echo   ComfyUI Portable - Installation
 echo  ============================================================
 echo.
 
-:: ── 1. Vérification de PowerShell ───────────────────────────
-where powershell >nul 2>&1
+:: ── 1. Vérification de curl ──────────────────────────────────
+echo [1/3] Vérification de curl...
+where curl >nul 2>&1
 if errorlevel 1 (
-    echo [ERREUR] PowerShell est introuvable. Impossible de continuer.
+    echo [ERREUR] curl est introuvable.
+    echo          Il est disponible nativement sur Windows 10/11.
     pause
     exit /b 1
 )
+echo     OK
 
 :: ── 2. Vérification de tar ───────────────────────────────────
-echo [1/3] Vérification de tar...
+echo [2/3] Vérification de tar...
 where tar >nul 2>&1
 if errorlevel 1 (
-    echo [ERREUR] La commande tar est introuvable.
-    echo          Elle est disponible nativement sur Windows 10/11.
+    echo [ERREUR] tar est introuvable.
+    echo          Il est disponible nativement sur Windows 10/11.
     pause
     exit /b 1
 )
@@ -36,7 +39,7 @@ echo     OK
 
 :: ── 3. Téléchargement de l'archive ──────────────────────────
 echo.
-echo [2/3] Téléchargement de l'archive ComfyUI Portable...
+echo [3/4] Téléchargement de l'archive ComfyUI Portable...
 echo       Source  : %ARCHIVE_URL%
 echo       Dossier : %INSTALL_DIR%
 echo.
@@ -44,8 +47,7 @@ echo.
 if exist "%INSTALL_DIR%%ARCHIVE_NAME%" (
     echo     Archive déjà présente, téléchargement ignoré.
 ) else (
-    powershell -NoProfile -Command ^
-        "& { $ProgressPreference='SilentlyContinue'; Invoke-WebRequest -Uri '%ARCHIVE_URL%' -OutFile '%INSTALL_DIR%%ARCHIVE_NAME%' -UseBasicParsing }"
+    curl -L --progress-bar -o "%INSTALL_DIR%%ARCHIVE_NAME%" "%ARCHIVE_URL%"
     if errorlevel 1 (
         echo [ERREUR] Le téléchargement a échoué.
         pause
@@ -56,7 +58,7 @@ if exist "%INSTALL_DIR%%ARCHIVE_NAME%" (
 
 :: ── 4. Décompression de l'archive ───────────────────────────
 echo.
-echo [3/3] Décompression de l'archive...
+echo [4/4] Décompression de l'archive...
 echo       Destination : %INSTALL_DIR%
 echo.
 
