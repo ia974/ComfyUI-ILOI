@@ -34,7 +34,7 @@ if exist "%TARGET_APP%" (
 :: ==========================================
 :: 2. RACCOURCI DOSSIER OUTPUT
 :: ==========================================
-set "TARGET_OUT=%ROOT_DIR%%COMFY_FOLDER%\output"
+set "TARGET_OUT=%COMFY_FOLDER%\output"
 set "SHORTCUT_OUT=%DESKTOP%\Comfy Output.lnk"
 
 :: Création du dossier s'il n'existe pas
@@ -50,7 +50,7 @@ powershell -NoProfile -Command ^
 :: ==========================================
 :: 3. RACCOURCI DOSSIER MODELS
 :: ==========================================
-set "TARGET_MOD=%ROOT_DIR%%COMFY_FOLDER%\models"
+set "TARGET_MOD=%COMFY_FOLDER%\models"
 set "SHORTCUT_MOD=%DESKTOP%\Comfy Models.lnk"
 
 :: Création du dossier s'il n'existe pas
