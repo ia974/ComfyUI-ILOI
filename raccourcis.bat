@@ -6,7 +6,7 @@ set "ROOT_DIR=%~dp0"
 set "DESKTOP=%USERPROFILE%\Desktop"
 
 :: Nom du dossier ComfyUI (si ton dossier s'appelle différemment, change-le ici)
-set "COMFY_FOLDER=ComfyUI"
+set "COMFY_FOLDER=%ROOT_DIR%ComfyUI_windows_portable\ComfyUI"
 
 echo ---------------------------------------------------
 echo      CREATION DES RACCOURCIS COMFY UI
