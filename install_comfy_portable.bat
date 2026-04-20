@@ -1,71 +1,86 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo =======================================================
-echo            Installation de ComfyUI Portable
-echo =======================================================
+:: ============================================================
+::  Télécharge et installe ComfyUI Portable (NVIDIA)
+:: ============================================================
+
+set "ARCHIVE_URL=https://github.com/Comfy-Org/ComfyUI/releases/download/v0.19.0/ComfyUI_windows_portable_nvidia.7z"
+set "ARCHIVE_NAME=ComfyUI_windows_portable_nvidia.7z"
+set "INSTALL_DIR=%~dp0"
+
+echo.
+echo  ============================================================
+echo   ComfyUI Portable - Installation
+echo  ============================================================
 echo.
 
-:: --- Configuration ---
-set "COMFY_ARCHIVE=ComfyUI_portable.7z"
-set "COMFY_URL=https://github.com/Comfy-Org/ComfyUI/releases/download/v0.19.0/ComfyUI_windows_portable_nvidia.7z"
-set "INSTALL_DIR=ComfyUI_windows_portable"
-:: ---------------------
-
-:: 1. Verifier si Git est installe
-where git >nul 2>nul
-if %ERRORLEVEL% NEQ 0 (
-    echo [ERREUR] Git n'est pas installe ou n'est pas dans le PATH.
-    echo Veuillez installer Git pour Windows : https://git-scm.com/download/win
+:: ── 1. Vérification de PowerShell ───────────────────────────
+where powershell >nul 2>&1
+if errorlevel 1 (
+    echo [ERREUR] PowerShell est introuvable. Impossible de continuer.
     pause
-    exit /b
+    exit /b 1
 )
 
-:: 2. Telecharger l'archive
-if not exist "%COMFY_ARCHIVE%" (
-    echo [1/4] Telechargement de ComfyUI Portable...
-    curl -L -o "%COMFY_ARCHIVE%" "%COMFY_URL%"
+:: ── 2. Vérification de tar ───────────────────────────────────
+echo [1/3] Vérification de tar...
+where tar >nul 2>&1
+if errorlevel 1 (
+    echo [ERREUR] La commande tar est introuvable.
+    echo          Elle est disponible nativement sur Windows 10/11.
+    pause
+    exit /b 1
+)
+echo     OK
+
+:: ── 3. Téléchargement de l'archive ──────────────────────────
+echo.
+echo [2/3] Téléchargement de l'archive ComfyUI Portable...
+echo       Source  : %ARCHIVE_URL%
+echo       Dossier : %INSTALL_DIR%
+echo.
+
+if exist "%INSTALL_DIR%%ARCHIVE_NAME%" (
+    echo     Archive déjà présente, téléchargement ignoré.
 ) else (
-    echo [1/4] L'archive "%COMFY_ARCHIVE%" existe deja, on passe le telechargement.
-)
-
-:: 3. Extraction de l'archive via un script PowerShell temporaire
-::    (C'est plus fiable que tar pour les .7z sur les vieux Windows 10)
-if not exist "%INSTALL_DIR%" (
-    echo [2/4] Extraction de l'archive (cela peut prendre quelques minutes)...
-    
-    :: On utilise un script PowerShell pour extraire si 7z n'est pas dispo
-    echo Expand-Archive -Path "%cd%\%COMFY_ARCHIVE%" -DestinationPath "%cd%" -Force > extract.ps1
-    
-    :: Note : Nativement Windows 11 lit les 7z avec Expand-Archive. 
-    :: Sur Windows 10 plus ancien, il se peut que cela faille.
-    :: L'alternative plus robuste est de demander a l'utilisateur d'avoir 7-zip installe.
-    
-    :: On essaie d'abord avec l'outil tar integré à windows (marche sur W11 et W10 recents pour les 7z)
-    tar -xf "%COMFY_ARCHIVE%"
-    
-    if not exist "%INSTALL_DIR%" (
-        echo [ERREUR] L'extraction a echoue. Assurez-vous d'utiliser Windows 11 ou un Windows 10 recent.
+    powershell -NoProfile -Command ^
+        "& { $ProgressPreference='SilentlyContinue'; Invoke-WebRequest -Uri '%ARCHIVE_URL%' -OutFile '%INSTALL_DIR%%ARCHIVE_NAME%' -UseBasicParsing }"
+    if errorlevel 1 (
+        echo [ERREUR] Le téléchargement a échoué.
         pause
-        exit /b
+        exit /b 1
     )
-) else (
-    echo [2/4] Le dossier "%INSTALL_DIR%" existe deja, on passe l'extraction.
+    echo     Téléchargement terminé.
 )
 
-:: Optionnel : Nettoyage de l'archive pour gagner de la place
-:: del "%COMFY_ARCHIVE%"
+:: ── 4. Décompression de l'archive ───────────────────────────
+echo.
+echo [3/3] Décompression de l'archive...
+echo       Destination : %INSTALL_DIR%
+echo.
 
-
-
+tar -xf "%INSTALL_DIR%%ARCHIVE_NAME%" -C "%INSTALL_DIR%"
+if errorlevel 1 (
+    echo [ERREUR] La décompression a échoué.
+    pause
+    exit /b 1
+)
 
 echo.
-echo =======================================================
-echo [4/4] INSTALLATION TERMINEE AVEC SUCCES !
-echo =======================================================
+echo  ============================================================
+echo   Installation terminée avec succès !
+echo   ComfyUI se trouve dans : %INSTALL_DIR%ComfyUI_windows_portable
+echo  ============================================================
 echo.
-echo Vous pouvez maintenant lancer ComfyUI en executant :
-echo %INSTALL_DIR%\run_nvidia_gpu.bat
+
+:: Nettoyage optionnel de l'archive
+set /p CLEAN="Supprimer l'archive .7z pour libérer de l'espace ? (O/N) : "
+if /i "%CLEAN%"=="O" (
+    del /f /q "%INSTALL_DIR%%ARCHIVE_NAME%"
+    echo     Archive supprimée.
+)
+
 echo.
 pause
-exit /b
+endlocal
