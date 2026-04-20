@@ -7,43 +7,43 @@ echo ==========================================
 set "ARCHIVE=ComfyUI_portable.7z"
 set "URL=https://github.com/Comfy-Org/ComfyUI/releases/download/v0.19.0/ComfyUI_windows_portable_nvidia.7z"
 
-:: 1. Vérifier si l'archive est déjà présente
+:: 1. Verifier si l'archive est deja presente
 if exist "%ARCHIVE%" (
-    echo Archive "%ARCHIVE%" déjà présente, téléchargement ignoré.
-    echo Si vous souhaitez re-télécharger, supprimez le fichier manuellement.
+    echo Archive "%ARCHIVE%" deja presente, telechargement ignore.
+    echo Si vous souhaitez re-telecharger, supprimez le fichier manuellement.
 ) else (
     echo Telechargement de ComfyUI Portable...
     curl -L -o "%ARCHIVE%" "%URL%"
     if errorlevel 1 (
-        echo ERREUR : Le téléchargement a échoué.
+        echo ERREUR : Le telechargement a echoue.
         pause
         exit /b 1
     )
-    echo Téléchargement terminé.
+    echo Telechargement termine.
 )
 
 :: 2. Extraire l'archive
 echo Extraction en cours...
 tar -xf "%ARCHIVE%"
 if errorlevel 1 (
-    echo ERREUR : L'extraction a échoué. Vérifiez que tar est disponible sur votre système.
+    echo ERREUR : L'extraction a echoue. Verifiez que tar est disponible sur votre systeme.
     pause
     exit /b 1
 )
-echo Extraction terminée.
+echo Extraction terminee.
 
 :: 3. Nettoyage optionnel de l'archive
-set /p CLEAN="Supprimer l'archive .7z pour libérer de l'espace ? (O/N) : "
+set /p CLEAN="Supprimer l'archive .7z pour liberer de l'espace ? (O/N) : "
 if /i "%CLEAN%"=="O" (
     del /f /q "%ARCHIVE%"
-    echo Archive supprimée.
+    echo Archive supprimee.
 ) else (
-    echo Archive conservée.
+    echo Archive conservee.
 )
 
 echo.
 echo ==========================================
-echo Terminé ! Lancez run_nvidia_gpu.bat pour démarrer.
+echo Termine ! Lancez run_nvidia_gpu.bat pour demarrer.
 echo ==========================================
 pause
 endlocal
