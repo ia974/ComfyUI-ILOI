@@ -6,7 +6,7 @@ set "BASE_MODELS_DIR=%~dp0ComfyUI_windows_portable\ComfyUI\models"
 set "CSV_FILE=models.csv"
 
 echo ======================================================
-echo   Installation des Modèles pour ComfyUI
+echo   Installation des Modeles pour ComfyUI
 echo ======================================================
 
 :: Vérifier si le fichier CSV existe
