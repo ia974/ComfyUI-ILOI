@@ -57,6 +57,8 @@ if not exist "%INSTALL_DIR%" (
 :: del "%COMFY_ARCHIVE%"
 
 
+
+
 echo.
 echo =======================================================
 echo [4/4] INSTALLATION TERMINEE AVEC SUCCES !
@@ -66,3 +68,4 @@ echo Vous pouvez maintenant lancer ComfyUI en executant :
 echo %INSTALL_DIR%\run_nvidia_gpu.bat
 echo.
 pause
+exit /b
