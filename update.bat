@@ -1,6 +1,6 @@
 @echo off
-echo Mise à jour du repository...
+echo Mise a jour du repository...
 git pull
 echo.
-echo Mise à jour terminée!
+echo Mise a jour terminee!
 pause
