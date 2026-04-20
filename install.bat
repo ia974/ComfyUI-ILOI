@@ -36,15 +36,15 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-:: -- Etape 4 : Installation des modeles --
-echo [4/4] Installation des modeles...
-call "%~dp0install_models.bat"
-if %errorlevel% neq 0 (
-    echo [ERREUR] install_models.bat a echoue. Abandon.
-    pause
-    exit /b %errorlevel%
-)
-echo.
+@REM :: -- Etape 4 : Installation des modeles --
+@REM echo [4/4] Installation des modeles...
+@REM call "%~dp0install_models.bat"
+@REM if %errorlevel% neq 0 (
+@REM     echo [ERREUR] install_models.bat a echoue. Abandon.
+@REM     pause
+@REM     exit /b %errorlevel%
+@REM )
+@REM echo.
 
 echo ============================================
 echo     Installation terminee avec succes !
