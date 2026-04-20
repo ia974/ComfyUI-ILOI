@@ -14,7 +14,7 @@ tar -xf ComfyUI_portable.7z
 :: Nettoyage optionnel de l'archive
 set /p CLEAN="Supprimer l'archive .7z pour libérer de l'espace ? (O/N) : "
 if /i "%CLEAN%"=="O" (
-    del /f /q "%INSTALL_DIR%%ARCHIVE_NAME%"
+    del /f /q "ComfyUI_portable.7z"
     echo     Archive supprimée.
 )
 
