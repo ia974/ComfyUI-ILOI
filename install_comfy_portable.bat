@@ -57,18 +57,6 @@ if not exist "%INSTALL_DIR%" (
 :: del "%COMFY_ARCHIVE%"
 
 
-:: 4. Installation des Custom Nodes et de leurs dependances
-echo.
-echo [3/4] Installation des Custom Nodes...
-
-set "NODES_DIR=%INSTALL_DIR%\ComfyUI\custom_nodes"
-:: Le python inclus dans la version portable
-set "PORTABLE_PYTHON=..\..\..\python_embeded\python.exe" 
-
-cd "%NODES_DIR%"
-
-cd ..\..\..
-
 echo.
 echo =======================================================
 echo [4/4] INSTALLATION TERMINEE AVEC SUCCES !
@@ -78,4 +66,3 @@ echo Vous pouvez maintenant lancer ComfyUI en executant :
 echo %INSTALL_DIR%\run_nvidia_gpu.bat
 echo.
 pause
-exit /b
