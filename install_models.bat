@@ -38,12 +38,16 @@ for /f "usebackq skip=1 tokens=1,2,3 delims=," %%A in ("%CSV_FILE%") do (
     :: Vérifier si le fichier existe déjà pour éviter de retélécharger
     if exist "!TARGET_DIR!\!FILE_NAME!" (
         echo [SKIP] Le fichier !FILE_NAME! existe deja.
-    ) else (
+    )
+    
+    :: Si le fichier n'existe pas, on lance le téléchargement
+    if not exist "!TARGET_DIR!\!FILE_NAME!" (
         echo [DOWNLOAD] Telechargement en cours...
         :: Utilisation de curl (inclus dans Windows 10/11)
-        :: -L suit les redirections (important pour HuggingFace)
-        :: -o definit le nom de sortie
-        curl -L "!DOWNLOAD_URL!" -o "!TARGET_DIR!\!FILE_NAME!"
+        :: -C - : Reprend le téléchargement s'il a été coupé
+        :: -L : Suit les redirections (important pour HuggingFace)
+        :: -o : Definit le nom de sortie
+        curl -C - -L "!DOWNLOAD_URL!" -o "!TARGET_DIR!\!FILE_NAME!"
         
         if !errorlevel! equ 0 (
             echo [OK] Telechargement termine avec succes.
