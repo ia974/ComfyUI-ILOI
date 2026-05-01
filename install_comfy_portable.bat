@@ -7,6 +7,13 @@ echo ==========================================
 set "ARCHIVE=ComfyUI_portable.7z"
 set "URL=https://github.com/Comfy-Org/ComfyUI/releases/download/v0.19.0/ComfyUI_windows_portable_nvidia.7z"
 
+:: Verifier si le dossier ComfyUI_windows_portable existe deja
+if exist "ComfyUI_windows_portable" (
+    echo Le dossier ComfyUI_windows_portable existe deja. Installation annulee.
+    pause
+    exit /b 0
+)
+
 :: 1. Verifier si l'archive est deja presente
 if exist "%ARCHIVE%" (
     echo Archive "%ARCHIVE%" deja presente, telechargement ignore.
@@ -43,7 +50,7 @@ if /i "%CLEAN%"=="O" (
 
 echo.
 echo ==========================================
-echo Termine ! Lancez run_nvidia_gpu.bat pour demarrer.
+echo Termine ! Lancez Comfy UI.exe pour demarrer.
 echo ==========================================
 pause
 endlocal
