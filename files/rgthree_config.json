@@ -1,0 +1,25 @@
+{
+  "features": {
+    "comfy_top_bar_menu": {
+      "enabled": false
+    },
+    "group_header_fast_toggle": {
+      "enabled": true,
+      "show": "always",
+      "toggles": [
+        "queue",
+        "bypass"
+      ]
+    },
+    "import_individual_nodes": {
+      "enabled": false
+    },
+    "menu_auto_nest": {
+      "subdirs": false
+    },
+    "menu_queue_selected_nodes": false,
+    "progress_bar": {
+      "enabled": false
+    }
+  }
+}

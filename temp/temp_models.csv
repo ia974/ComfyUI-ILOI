@@ -1,0 +1,4 @@
+checkpoints,dreamshaper_8.safetensors,https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
+checkpoints,dreamshaperXL_lightningDPMSDE.safetensors,https://huggingface.co/oguzm/dreamshaper-xl-lightning-dpmsde/resolve/main/dreamshaperXL_lightningDPMSDE.safetensors
+vae,sdxl_vae.safetensors,https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors
+checkpoints,juggernautXL_juggXIByRundiffusion.safetensors,https://huggingface.co/misri/juggernautXL_juggXIByRundiffusion

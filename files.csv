@@ -1,0 +1,4 @@
+path,filename
+ComfyUI_windows_portable\ComfyUI\user\default\,comfy.settings.json
+ComfyUI_windows_portable\ComfyUI\custom_nodes\rgthree-comfy\,rgthree_config.json
+ComfyUI_windows_portable\,run_nvidia_gpu_custom.bat
