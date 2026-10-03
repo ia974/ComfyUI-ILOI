@@ -29,17 +29,34 @@ if exist "%ARCHIVE%" (
     echo Telechargement termine.
 )
 
-:: 2. Extraire l'archive
-echo Extraction en cours...
-tar -xf "%ARCHIVE%"
+:: 2. Trouver un extracteur 7z (le tar de Windows 10 ne supporte pas LZMA)
+set "SEVENZIP="
+if exist "%ProgramFiles%\7-Zip\7z.exe" set "SEVENZIP=%ProgramFiles%\7-Zip\7z.exe"
+if not defined SEVENZIP if exist "%ProgramFiles(x86)%\7-Zip\7z.exe" set "SEVENZIP=%ProgramFiles(x86)%\7-Zip\7z.exe"
+if not defined SEVENZIP for %%I in (7z.exe) do if not "%%~$PATH:I"=="" set "SEVENZIP=%%~$PATH:I"
+if not defined SEVENZIP if exist "7zr.exe" set "SEVENZIP=%CD%\7zr.exe"
+if not defined SEVENZIP (
+    echo 7-Zip introuvable, telechargement de 7zr.exe depuis 7-zip.org...
+    curl -L -o "7zr.exe" "https://www.7-zip.org/a/7zr.exe"
+    if errorlevel 1 (
+        echo ERREUR : Impossible de telecharger 7zr.exe. Installez 7-Zip depuis https://www.7-zip.org
+        pause
+        exit /b 1
+    )
+    set "SEVENZIP=%CD%\7zr.exe"
+)
+
+:: 3. Extraire l'archive
+echo Extraction en cours avec "!SEVENZIP!"...
+"!SEVENZIP!" x "%ARCHIVE%" -y
 if errorlevel 1 (
-    echo ERREUR : L'extraction a echoue. Verifiez que tar est disponible sur votre systeme.
+    echo ERREUR : L'extraction a echoue.
     pause
     exit /b 1
 )
 echo Extraction terminee.
 
-:: 3. Nettoyage optionnel de l'archive
+:: 4. Nettoyage optionnel de l'archive
 set /p CLEAN="Supprimer l'archive .7z pour liberer de l'espace ? (O/N) : "
 if /i "%CLEAN%"=="O" (
     del /f /q "%ARCHIVE%"
@@ -53,4 +70,4 @@ echo ==========================================
 echo Termine ! Lancez Comfy UI.exe pour demarrer.
 echo ==========================================
 pause
-endlocal
+endlocal
