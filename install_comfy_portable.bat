@@ -5,7 +5,7 @@ echo Installation de ComfyUI Portable
 echo ==========================================
 
 set "ARCHIVE=ComfyUI_portable.7z"
-set "URL=https://github.com/Comfy-Org/ComfyUI/releases/download/v0.19.0/ComfyUI_windows_portable_nvidia.7z"
+set "URL=https://github.com/Comfy-Org/ComfyUI/releases/download/v0.38.0/ComfyUI_windows_portable_nvidia.7z"
 
 :: Verifier si le dossier ComfyUI_windows_portable existe deja
 if exist "ComfyUI_windows_portable" (
