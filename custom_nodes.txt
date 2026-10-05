@@ -5,3 +5,7 @@ https://github.com/Fannovel16/comfyui_controlnet_aux
 https://github.com/cubiq/ComfyUI_essentials
 https://github.com/rgthree/rgthree-comfy
 https://github.com/ia974/Prompt-Styles
+
+https://github.com/ostris/ComfyUI-Krea2-Ostris-Edit
+https://github.com/ProGamerGov/ComfyUI_preview360panorama
+https://github.com/mickmumpitz/ComfyUI-Mickmumpitz-Nodes
